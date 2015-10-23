@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link
+		href='http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css'></link>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main2.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid ">
+			<div id="linha1" class="ui-grid-row">
+				<div id="div-logo">
+					<span id="nome-logo">SIGAAS</span>
+				</div>
+				<div id="div-barra" class="barra-superior"></div>
+			</div>
+		</div>
+		<div id="linha2" class="ui-grid-row">
+			<div id="div-navegacao" class="navegacao-lateral">
+				<h:form>
+					<p:menu>
+						<p:menuitem value="Calendario"  outcome="/calendario.xhtml"  styleClass="ativo" 
+							icon="fa fa-fw fa-calendar" />
+						<p:menuitem value="Requisicoes" outcome="/requisicoes.xhtml"
+							icon="fa fa-fw fa-list-alt" />
+					</p:menu>
+				</h:form>
+			</div>
+
+
+			<div id="div-composicao">
+				<div class="header-agenda">
+					
+					<h:form>
+					 <p:selectCheckboxMenu id="menu"  label="Salas" styleClass="salas-checkbox"
+                              filter="true" filterMatchMode="startsWith" >
+			           		 <f:selectItem itemLabel="Sala 1" itemValue="" />
+							<f:selectItem itemLabel="Sala 2" itemValue="Negar" />
+							<f:selectItem itemLabel="Sala 3" itemValue="Aprovar" />
+			        </p:selectCheckboxMenu>
+						<div class="opcoes-agenda">
+							<p:commandButton icon="fa fa-fw fa-angle-left" styleClass="header-buttons"
+								action="#{agendaBean.nextPrevious('previous')}"
+								update="formAgenda:schedule" />
+							<p:commandButton icon="fa fa-fw fa-angle-right" styleClass="header-buttons"
+								action="#{agendaBean.nextPrevious('next')}"
+								update="formAgenda:schedule" />
+							<p:commandButton value="Hoje" action="#{agendaBean.mudarHoje}" styleClass="header-buttons"
+								update="formAgenda:schedule" />
+						
+						
+						<p:selectOneButton value="#{agendaBean.view}"  styleClass="views"  >
+							<f:selectItem itemLabel="Dia" itemValue="agendaDay" />
+							<f:selectItem itemLabel="Semana" itemValue="agendaWeek" />
+							<f:selectItem itemLabel="Mes" itemValue="month" />
+							<p:ajax event="change" update="formAgenda:schedule" />
+						</p:selectOneButton>
+						</div>
+					</h:form>
+				</div>
+				<div class="agenda">
+					<h:form id="formAgenda">
+						<p:growl id="messages" showDetail="true" widgetVar="messages" />
+						<p:schedule id="schedule" value="#{requisicoesView.eventModel}"
+							locale="pt" widgetVar="myschedule" clientTimezone='local'
+							styleClass="agenda" initialDate="#{agendaBean.diaAgenda}"
+							view="#{agendaBean.view}" timeZone="America/Recife"
+							showHeader="false" allDaySlot="false">
+
+							<p:ajax event="eventResize"
+								listener="#{requisicoesView.onEventResize}" update="messages" />
+
+							<p:ajax event="eventMove"
+								listener="#{requisicoesView.onEventMove}" update="messages" />
+
+							<p:ajax event="dateSelect"
+								listener="#{requisicoesView.onDateSelect}"
+								update=":novaRequisicao"
+								oncomplete="PF('novaRequisicaoDialog').show();" />
+
+							<p:ajax event="eventSelect"
+								listener="#{requisicoesView.onEventSelect}"
+								update=":editarRequisicao"
+								oncomplete="PF('editarRequisicaoDialog').show();" />
+						</p:schedule>
+
+					</h:form>
+				</div>
+				<p:dialog widgetVar="novaSala" header="Nova Sala" showEffect="clip"
+					hideEffect="clip">
+					<h:form>
+						<h:panelGrid id="novaSalaPanel" columns="2">
+							<p:outputLabel for="nome" value="Nome:" />
+							<p:inputText id="nome" value="#{salaBean.sala.nome}" />
+
+							<p:outputLabel for="capacidade" value="Capacidade:" />
+							<p:inputText id="capacidade" value="#{salaBean.sala.capacidade}" />
+
+							<p:commandButton value="Cancelar"
+								onclick="PF('novaSala').hide();" />
+							<p:commandButton value="Salvar"
+								actionListener="#{salaBean.salvar}" update="novaSalaPanel"
+								oncomplete="PF('novaSala').hide();" />
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
+
+				<p:dialog widgetVar="editarRequisicaoDialog"
+					header="Editar Requisicao" showEffect="clip" hideEffect="clip">
+					<h:form id="editarRequisicao">
+						<div class="ui-grid">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4 ">
+									<p:outputLabel styleClass="" value="Requisitante:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputText disabled="true"
+										value="#{requisicoesView.event.requisicao.requisitante.email}" />
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Titulo:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputText value="#{requisicoesView.event.requisicao.titulo}" />
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Sala:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:autoComplete forceSelection="true"
+										value="#{requisicoesView.nomeSala}"
+										completeMethod="#{requisicoesView.completeSala}">
+									</p:autoComplete>
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="De:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputMask
+										value="#{requisicoesView.event.requisicao.horarioInicio}"
+										mask="99/99/9999 99:99">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+											ignoreTimezone="false" timeZone="America/Recife" />
+									</p:inputMask>
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Ate:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputMask
+										value="#{requisicoesView.event.requisicao.horarioFinal}"
+										mask="99/99/9999 99:99">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+											ignoreTimezone="false" timeZone="America/Recife" />
+									</p:inputMask>
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Quantidade:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputText
+										value="#{requisicoesView.event.requisicao.qtdPessoas}" />
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Materiais:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputTextarea rows="3"
+										value="#{requisicoesView.event.requisicao.materiais}" />
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:outputLabel value="Descricao:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<p:inputTextarea rows="6"
+										value="#{requisicoesView.event.requisicao.descricao}" />
+								</div>
+							</div>
+							<div class="ui-grid-col-8">
+								<p:selectOneRadio
+									value="#{requisicoesView.event.requisicao.statusRequisicao}">
+									<f:selectItem itemLabel="Pendente" itemValue="pendente" />
+									<f:selectItem itemLabel="Aprovada" itemValue="aprovada" />
+									<f:selectItem itemLabel="Reprovada" itemValue="reprovada" />
+								</p:selectOneRadio>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-12">
+									<p:commandButton value="Salvar"
+										actionListener="#{requisicoesView.editar}"
+										oncomplete="PF('myschedule').update();PF('editarRequisicaoDialog').hide();" />
+								</div>
+							</div>
+
+						</div>
+					</h:form>
+				</p:dialog>
+
+				<p:dialog widgetVar="novaRequisicaoDialog" header="Nova requisicao"
+					showEffect="clip" hideEffect="clip" styleClass="requisicaoDialog">
+					<h:form id="novaRequisicao">
+						<div class="ui-grid">
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Requisitante: </span>
+								</div>
+								<p:autoComplete forceSelection="true"
+									value="#{requisicoesView.emailRequisitante}"
+									completeMethod="#{requisicoesView.completeRequisitante}">
+								</p:autoComplete>
+							</div>
+
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Titulo: </span>
+								</div>
+
+								<p:inputText value="#{requisicoesView.event.requisicao.titulo}" />
+							</div>
+
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Sala: </span>
+								</div>
+
+								<p:autoComplete forceSelection="true"
+									value="#{requisicoesView.nomeSala}"
+									completeMethod="#{requisicoesView.completeSala}">
+								</p:autoComplete>
+							</div>
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Quantidade: </span>
+								</div>
+								<p:inputText
+									value="#{requisicoesView.event.requisicao.qtdPessoas}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="De:" />
+
+								<p:inputMask
+									value="#{requisicoesView.event.requisicao.horarioInicio}"
+									mask="99/99/9999 99:99">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+										ignoreTimezone="false" timeZone="America/Recife" />
+								</p:inputMask>
+
+								<p:outputLabel value="Ate:" />
+								<p:inputMask
+									value="#{requisicoesView.event.requisicao.horarioFinal}"
+									mask="99/99/9999 99:99">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+										ignoreTimezone="false" timeZone="America/Recife" />
+								</p:inputMask>
+							</div>
+
+							<div class="ui-grid-row">
+								<p:outputLabel value="Materiais:" />
+							</div>
+							<div class="ui-grid-row">
+								<p:inputTextarea rows="3"
+									value="#{requisicoesView.event.requisicao.materiais}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="Descricao:" />
+							</div>
+							<div class="ui-grid-row">
+								<p:inputTextarea rows="6"
+									value="#{requisicoesView.event.requisicao.descricao}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="Status:" />
+
+								<p:selectOneRadio
+									value="#{requisicoesView.event.requisicao.statusRequisicao}">
+									<f:selectItem itemLabel="Pendente" itemValue="pendente" />
+									<f:selectItem itemLabel="Aprovada" itemValue="aprovada" />
+									<f:selectItem itemLabel="Reprovada" itemValue="reprovada" />
+								</p:selectOneRadio>
+							</div>
+							<div class="ui-grid-row">
+								<p:commandButton value="Salvar"
+									actionListener="#{requisicoesView.salvar}"
+									oncomplete="PF('myschedule').update();PF('novaRequisicaoDialog').hide();" />
+							</div>
+						</div>
+					</h:form>
+				</p:dialog>
+
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

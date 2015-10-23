@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid-row header">
+			<div id="logo">
+				<span id="texto-logo">SIGAAS</span>
+			</div>
+			<div id="ferramentas" class="barra-superior"></div>
+		</div>
+		<div class="ui-grid-row nova-requisicao-wrapper">
+			<div class="ui-grid nova-requisicao">
+				<div class="ui-grid-row header-form">
+					<div class="div-header-text">
+						Nova requisição
+					</div>
+				</div>
+				<div class="ui-grid-row nova-requisicao-form">
+					<h:form id="novaRequisicao">
+						<div class="ui-grid">
+							<div class="ui-grid-row">
+								<div class="inline-label ui-grid-col-6">
+									<span class="text-label"> Requisitante: </span>
+								</div>
+								<p:autoComplete forceSelection="true"
+									styleClass="requisitante-input"
+									value="#{requisicoesView.emailRequisitante}"
+									completeMethod="#{requisicoesView.completeRequisitante}">
+								</p:autoComplete>
+							</div>
+
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Titulo: </span>
+								</div>
+
+								<p:inputText value="#{requisicoesView.event.requisicao.titulo}" />
+							</div>
+
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Sala: </span>
+								</div>
+
+								<p:autoComplete forceSelection="true"
+									value="#{requisicoesView.nomeSala}"
+									completeMethod="#{requisicoesView.completeSala}">
+								</p:autoComplete>
+							</div>
+							<div class="ui-grid-row">
+								<div class="inline-label">
+									<span class="text-label"> Quantidade: </span>
+								</div>
+								<p:inputText
+									value="#{requisicoesView.event.requisicao.qtdPessoas}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="De:" />
+
+								<p:inputMask
+									value="#{requisicoesView.event.requisicao.horarioInicio}"
+									mask="99/99/9999 99:99">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+										ignoreTimezone="false" timeZone="America/Recife" />
+								</p:inputMask>
+
+								<p:outputLabel value="Ate:" />
+								<p:inputMask
+									value="#{requisicoesView.event.requisicao.horarioFinal}"
+									mask="99/99/9999 99:99">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+										ignoreTimezone="false" timeZone="America/Recife" />
+								</p:inputMask>
+							</div>
+
+							<div class="ui-grid-row">
+								<p:outputLabel value="Materiais:" />
+							</div>
+							<div class="ui-grid-row">
+								<p:inputTextarea rows="3"
+									value="#{requisicoesView.event.requisicao.materiais}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="Descricao:" />
+							</div>
+							<div class="ui-grid-row">
+								<p:inputTextarea rows="6"
+									value="#{requisicoesView.event.requisicao.descricao}" />
+							</div>
+							<div class="ui-grid-row">
+								<p:outputLabel value="Status:" />
+
+								<p:selectOneRadio
+									value="#{requisicoesView.event.requisicao.statusRequisicao}">
+									<f:selectItem itemLabel="Pendente" itemValue="pendente" />
+									<f:selectItem itemLabel="Aprovada" itemValue="aprovada" />
+									<f:selectItem itemLabel="Reprovada" itemValue="reprovada" />
+								</p:selectOneRadio>
+							</div>
+							<div class="ui-grid-row">
+								<p:commandButton value="Salvar"
+									actionListener="#{requisicoesView.salvar}" />
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

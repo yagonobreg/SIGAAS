@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link
+		href='http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css'></link>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main2.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid ">
+			<div id="linha1" class="ui-grid-row">
+				<div id="div-logo">
+					<span id="nome-logo">SIGAAS</span>
+				</div>
+				<div id="div-barra" class="barra-superior"></div>
+			</div>
+		</div>
+		<div id="linha2" class="ui-grid-row">
+			<div id="div-navegacao" class="navegacao-lateral">
+				<h:form>
+					<p:menu>
+						<p:menuitem value="Usuarios" outcome="/usuarios.xhtml" 
+						icon="fa fa-fw fa-users" />
+						<p:menuitem value="Ambientes" outcome="/ambientes.xhtml"
+							styleClass="ativo" icon="fa fa-fw fa-home" />
+						<p:menuitem value="Calendario" outcome="/calendario.xhtml"
+							icon="fa fa-fw fa-calendar" />
+						<p:menuitem value="Requisicoes" outcome="/requisicoes.xhtml"
+							icon="fa fa-fw fa-list-alt" />
+					</p:menu>
+				</h:form>
+			</div>
+
+			<div id="div-composicao">
+				<div class="usuarioswrapper">
+					<h2>Ambientes</h2>
+					<div id="usuariostablewrapper">
+						<h:form id="formtabelausuarios">
+							<p:dataTable var="ambiente" widgetVar="carsTable" id="tabelausuarios"
+								value="#{ambientesBean.ambientes}" rows="10" paginator="true"
+								rowKey="#{ambiente.nome}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,25,50,100" sortMode="multiple"
+								paginatorPosition="bottom">
+								<f:facet name="header">
+									
+									<p:button outcome="/cadastrarambiente.xhtml" id="botaoAddUsuario" icon="fa fa-fw fa-plus"
+											styleClass="addusuario" value="Novo ambiente"  />
+											
+									<p:inputText id="globalFilter" styleClass="inputcabecario"
+										onkeyup="PF('carsTable').filter()" placeholder="Procurar" />
+								</f:facet>
+								<p:column headerText="Nome" id="colunaNome" sortBy="#{ambiente.nome}"
+									filterBy="#{ambiente.nome}">
+								
+								 <p:watermark for="@(#formtabelausuarios\\:tabelausuarios\\:colunaNome\\:filter)" value="Procurar por nome" />
+									<h:outputText value="#{ambiente.nome}" />
+								</p:column>
+								<p:column headerText="Quantidade lugares" id="colunaLugares" sortBy="#{ambiente.qtdlugares}"
+									filterBy="#{ambiente.qtdlugares}">
+									<p:watermark for="@(#formtabelausuarios\\:tabelausuarios\\:colunaLugares\\:filter)" value="Procurar por quantidade" />
+									<h:outputText value="#{ambiente.qtdlugares}" />
+								</p:column>
+								<p:column headerText="Tipo" id="colunaTipo"
+									sortBy="#{ambiente.tipo}"
+									filterBy="#{ambiente.tipo}">
+									<h:outputText value="#{ambiente.tipo}" />
+									<p:watermark for="@(#formtabelausuarios\\:tabelausuarios\\:colunaTipo\\:filter)" value="Procurar por tipo" />
+								</p:column>
+								<p:column headerText="Ações" style="width:150px">
+									<p:commandButton styleClass="botaoDetalhes"
+										icon="fa fa-fw fa-search">
+										<f:setPropertyActionListener value="#{ambiente}"
+											target="#{ambientesBean.ambienteSelecionado}" />
+									</p:commandButton>
+									<p:commandButton styleClass="botaoEditar"
+										icon="fa fa-fw fa-edit">
+										<f:setPropertyActionListener value="#{ambiente}"
+											target="#{ambientesBean.ambienteSelecionado}" />
+									</p:commandButton>
+									<p:commandButton styleClass="botaoDeletar"
+										icon="fa fa-fw fa-trash-o">
+										<f:setPropertyActionListener value="#{ambiente}"
+											target="#{ambientesBean.ambienteSelecionado}" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link
+		href='http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css'></link>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main2.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid ">
+			<div id="linha1" class="ui-grid-row">
+				<div id="div-logo">
+					<span id="nome-logo">SIGAAS</span>
+				</div>
+				<div id="div-barra" class="barra-superior"></div>
+			</div>
+		</div>
+		<div id="linha2" class="ui-grid-row">
+			<div id="div-navegacao" class="navegacao-lateral">
+				<h:form>
+					<p:menu>
+						<p:menuitem value="Calendario" outcome="/calendario.xhtml"
+							icon="fa fa-fw fa-calendar" />
+						<p:menuitem value="Requisicoes" outcome="/requisicoes.xhtml"
+							styleClass="ativo" icon="fa fa-fw fa-list-alt" />
+					</p:menu>
+				</h:form>
+			</div>
+
+
+			<div id="div-composicao">
+
+				<h:form>
+					<div class="requisicoes-header">
+						<p:commandButton value="nova requisicao" icon="fa fa-fw fa-plus"
+							styleClass="nova-requisicao" />
+						<p:commandButton styleClass="button-requisicoes"
+							icon="fa fa-fw fa-check" value="aplicar" />
+						<p:selectOneMenu id="console" styleClass="one-menu-table">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="Negar" itemValue="Negar" />
+							<f:selectItem itemLabel="Aprovar" itemValue="Aprovar" />
+						</p:selectOneMenu>
+
+					</div>
+					<p:dataTable var="requisicao" widgetVar="carsTable"
+						value="#{requisicoesBean.requisicoes}" rows="10"
+						selection="#{requisicoesBean.selectedRequisicoes}"
+						paginator="true" rowKey="#{requisicao.id}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="2,5,10,15" sortMode="multiple">
+						<p:column selectionMode="multiple" styleClass="selection"
+							width="20" />
+						<p:column headerText="Requisitante"
+							sortBy="#{requisicao.requisitante.email}"
+							filterBy="#{requisicao.requisitante.email}">
+							<h:outputText value="#{requisicao.requisitante.email}" />
+						</p:column>
+						<p:column headerText="Sala"
+							sortBy="#{requisicao.salaRequisitada.nome}"
+							filterBy="#{requisicao.salaRequisitada.nome}">
+							<h:outputText value="#{requisicao.salaRequisitada.nome}" />
+						</p:column>
+						<p:column headerText="Horario"
+							filterBy="#{requisicao.horarioInicio}"
+							sortBy="#{requisicao.horarioInicio}">
+							<f:facet name="filter" styleClass="filter-horario">						
+									<p:calendar showOn="button" />
+									<p:calendar showOn="button" />							
+							</f:facet>
+							<h:outputText value="#{requisicao.horarioInicio}" />
+						</p:column>
+						<p:column headerText="Status" filterMatchMode="equals"
+							filterBy="#{requisicao.statusRequisicao}"
+							sortBy="#{requisicao.statusRequisicao}">
+							<f:facet name="filter">
+								<p:selectOneMenu id="console" styleClass="one-menu-header">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+									<f:selectItem itemLabel="Aprovada" itemValue="aprovada" />
+									<f:selectItem itemLabel="Reprovada" itemValue="reprovada" />
+									<f:selectItem itemLabel="Pendente" itemValue="aprovada" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText value="#{requisicao.statusRequisicao}" />
+						</p:column>
+						<p:column  width="60">
+							<p:commandButton icon="ui-icon-search" title="View">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

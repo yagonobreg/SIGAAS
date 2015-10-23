@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link
+		href='http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css'></link>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main2.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid ">
+			<div id="linha1" class="ui-grid-row">
+				<div id="div-logo">
+					<span id="nome-logo">SIGAAS</span>
+				</div>
+				<div id="div-barra" class="barra-superior"></div>
+			</div>
+		</div>
+		<div id="linha2" class="ui-grid-row">
+			<div id="div-navegacao" class="navegacao-lateral">
+				<h:form>
+					<p:menu>
+						<p:menuitem value="Usuarios" outcome="/usuarios.xhtml"
+						icon="fa fa-fw fa-users" />
+						<p:menuitem value="Ambientes" outcome="/ambientes.xhtml"
+							 icon="fa fa-fw fa-home" />
+						<p:menuitem value="Calendario"  outcome="/calendario.xhtml"  styleClass="ativo" 
+							icon="fa fa-fw fa-calendar" />
+						<p:menuitem value="Requisicoes" outcome="/requisicoes.xhtml"
+							icon="fa fa-fw fa-list-alt" />
+					</p:menu>
+				</h:form>
+			</div>
+
+
+			<div id="div-composicao">
+				<div class="header-agenda">
+					
+					<h:form>
+					 <p:selectCheckboxMenu id="menu"  label="Salas" styleClass="salas-checkbox"
+                              filter="true" filterMatchMode="startsWith" >
+			           		 <f:selectItem itemLabel="Sala 1" itemValue="" />
+							<f:selectItem itemLabel="Sala 2" itemValue="Negar" />
+							<f:selectItem itemLabel="Sala 3" itemValue="Aprovar" />
+			        </p:selectCheckboxMenu>
+						<div class="opcoes-agenda">
+							<p:commandButton icon="fa fa-fw fa-angle-left" styleClass="header-buttons"
+								action="#{agendaBean.nextPrevious('previous')}"
+								update="formAgenda:schedule" />
+							<p:commandButton icon="fa fa-fw fa-angle-right" styleClass="header-buttons"
+								action="#{agendaBean.nextPrevious('next')}"
+								update="formAgenda:schedule" />
+							<p:commandButton value="Hoje" action="#{agendaBean.mudarHoje}" styleClass="header-buttons"
+								update="formAgenda:schedule" />
+						
+						
+						<p:selectOneButton value="#{agendaBean.view}"  styleClass="views"  >
+							<f:selectItem itemLabel="Dia" itemValue="agendaDay" />
+							<f:selectItem itemLabel="Semana" itemValue="agendaWeek" />
+							<f:selectItem itemLabel="Mes" itemValue="month" />
+							<p:ajax event="change" update="formAgenda:schedule" />
+						</p:selectOneButton>
+						</div>
+					</h:form>
+				</div>
+				<div class="agenda">
+					<h:form id="formAgenda">
+						<p:growl id="messages" showDetail="true" widgetVar="messages" />
+						<p:schedule id="schedule" value="#{scheduleView.eventModel}"
+							locale="pt" widgetVar="myschedule" clientTimezone='local' axisFormat="HH:mm"
+							styleClass="agenda" initialDate="#{agendaBean.diaAgenda}"
+							view="#{agendaBean.view}" timeZone="America/Recife"
+							showHeader="false" allDaySlot="false">
+						</p:schedule>
+
+					</h:form>
+				</div>
+			
+
+
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

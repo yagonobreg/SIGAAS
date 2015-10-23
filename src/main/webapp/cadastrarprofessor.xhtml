@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link
+		href='http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css'></link>
+	<h:outputScript library="js" name="traducao.js" />
+</h:head>
+<h:body>
+	<f:facet name="last">
+		<h:outputStylesheet name="css/main2.css" />
+	</f:facet>
+	<div class="ui-grid ">
+		<div class="ui-grid ">
+			<div id="linha1" class="ui-grid-row">
+				<div id="div-logo">
+					<span id="nome-logo">SIGAAS</span>
+				</div>
+				<div id="div-barra" class="barra-superior"></div>
+			</div>
+		</div>
+		<div id="linha2" class="ui-grid-row">
+			<div id="div-navegacao" class="navegacao-lateral">
+				<h:form>
+					<p:menu>
+						<p:menuitem value="Usuarios" outcome="/usuarios.xhtml"
+							styleClass="ativo" icon="fa fa-fw fa-users" />
+						<p:menuitem value="Ambientes" outcome="/ambientes.xhtml"
+							 icon="fa fa-fw fa-home" />
+						<p:menuitem value="Calendario" outcome="/calendario.xhtml"
+							icon="fa fa-fw fa-calendar" />
+						<p:menuitem value="Requisicoes" outcome="/requisicoes.xhtml"
+							icon="fa fa-fw fa-list-alt" />
+					</p:menu>
+				</h:form>
+			</div>
+
+			<div id="div-composicao">
+				<div id="cadastrousuario" class="usuarioswrapper">
+					<div class="usuariosformwrapper">
+						<h:form id="formcadastrousuarios">
+							<div class="tituloform">Cadastrar professor</div>
+							<div class="formwrapper">
+
+								<div class="ui-grid">
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Nome</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:inputText value="#{cadastrarProfessorBean.usuario.nome}" />
+										</div>
+									</div>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Email</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:inputText value="#{cadastrarProfessorBean.usuario.email}" />
+										</div>
+									</div>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Telefone</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:inputText value="#{cadastrarProfessorBean.usuario.telefone}" />
+										</div>
+									</div>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Login</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:inputText
+												value="#{cadastrarProfessorBean.usuario.informacaoLogin.login}" />
+										</div>
+									</div>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Senha</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:password id="senha" match="confirmarsenha"
+												styleClass="inputsenha"
+												value="#{cadastrarProfessorBean.usuario.informacaoLogin.senha}" />
+										</div>
+									</div>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-2 label-col">Confimar senha</div>
+										<div class="ui-grid-col-10 val-col">
+											<p:password id="confirmarsenha" styleClass="inputsenha"
+												value="#{cadastrarProfessorBean.usuario.informacaoLogin.senha}" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="ui-grid">
+								<div class="ui-grid-row opcoes">
+									<div class="ui-grid-col-2 label-col"></div>
+									<div class="ui-grid-col-10 val-col">
+										<p:commandButton styleClass="botaoopcoes botaoAddUsuario" update="formcadastrousuarios"
+											value="Adicionar" action="#{cadastrarProfessorBean.salvarProfessor}" />
+										<p:button outcome="/usuarios.xhtml" 
+											styleClass="botaoopcoes botaoCancelar" value="Cancelar" />
+									</div>
+
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

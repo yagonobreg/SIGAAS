@@ -1,0 +1,209 @@
+body{
+	margin:0px;
+}
+
+.header{
+	display:block;
+	height: 45px;
+	position:fixed;
+	width:100%;
+	top:0;
+	left:0;
+	right: 0;
+	z-index: 1001;
+}
+
+#logo{
+	display:table;
+	float:left;
+	height: 45px;
+	background:#438eb9;
+	width: 250px;
+	text-align: center;
+	
+}
+
+#texto-logo{ 
+	font-family:sans-serif;
+	font-size:25px;
+	display: table-cell;
+	color:#ecf0f1; 
+	vertical-align: middle;
+}
+
+#ferramentas{
+	display:block;
+	height: 45px;
+	background:#438eb9;
+	width: 100%;
+	
+
+}
+
+#div-navegacao{
+	display:block;
+	float:left;
+	position:fixed;
+	height: 100%;
+	left:0;
+	background:#f8f8f8;
+	width: 250px;
+	margin-top: 45px;
+}
+
+#div-composicao{
+	color:#22313F; 
+	font-family:Lato,sans-serif;
+	display:inline-block;
+	margin-top:45px;
+	margin-left:250px;
+	background:#f8f8f8;
+	width: 100%;
+	height: 2000px;
+}
+
+#botoes-navegacao{
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+.botaoNavegacao{
+	left: 35px;
+	margin-top: 10px;
+	
+	border-radius:0px;
+	font-weight:normal;
+	background:#d15b47;
+	color:white;
+	width: 180px;
+	text-shadow:none;
+	box-shadow:none;
+}
+.calendario .ui-datepicker{
+	width: 95%;
+	margin: auto;
+	border: none;
+	background: #f8f8f8;
+}
+
+.calendario .ui-datepicker-header{
+	font-family:sans-serif;
+	background: #f8f8f8;
+	border:none;
+	font-weight: normal;
+
+}
+
+.calendario .ui-datepicker-calendar .ui-state-default{
+	font-weight: normal;
+	color: #2d323d;
+}
+.calendario thead{
+	font-size: 13px;
+}
+#formAgenda{
+	margin-top: 20px;
+	font-family:sans-serif;
+
+}
+.agenda .fc-day-header {
+	font-family:sans-serif;
+	padding: 10px;
+	background: white;
+}
+.agenda td.fc-today{
+	background: #F2F1EF;
+}
+
+.agenda th.fc-axis.ui-widget-header{
+	background:#fff;
+}
+.agenda .ui-button {
+	border-radius:0px;
+	font-weight:normal;
+	background:#F2F1EF;
+	text-shadow:none;
+	box-shadow:none;
+}
+
+.pendente {
+    background: #5db734;
+}
+
+.aprovada {
+    background: #67c2ef;
+}
+
+.reprovada {
+    background: #ff2121;
+}
+.requisicaoDialog {
+	border-radius: 5px;
+	
+	width: 600px !important;
+}
+.requisicaoDialog  .ui-dialog-titlebar{
+	background: white;
+	border-bottom: 1 px;
+}
+.requisicaoDialog .ui-widget-header{
+	border-bottom: 1px solid #a8a8a8;
+}
+
+.inline-label{
+	display:table;
+	float:left;
+	width: 100px;
+	text-align: right;
+	margin-bottom: auto;
+    margin-top: auto;
+    padding-right: 15px;
+}
+
+.text-label { 
+	font-family:sans-serif;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#novaRequisicao .ui-grid-row {
+	margin-top: 10px;
+}
+
+
+/* novarequisicao.xhtml*/
+.ui-grid.nova-requisicao{
+	border:1px solid #ddd;
+	border-radius: 4px;
+	width: 100%;
+	margin:15px;
+}
+.ui-grid-row.nova-requisicao-wrapper{
+	margin-top: 45px;
+	background-color: #f9f9f9;
+}
+
+.ui-grid-row.header-form{
+	color: #9D9EA5;
+    background-color: #f5f5f5;
+    height: 45px;
+    display:flex;
+    align-items:center;
+    font-size:25px;
+
+
+}
+
+.ui-grid-row.nova-requisicao-form{
+	background-color: #fff;
+	font-family:sans-serif;
+	color:#9D9EA5; 
+}
+
+.ui-autocomplete{
+	width: 75%;
+}
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+	width: 100%;
+	-webkit-box-shadow: none;
+	box-shadow:none;
+}
